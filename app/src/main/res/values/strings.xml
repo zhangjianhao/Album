@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Album</string>
+    <string name="album">相册</string>
+    <string name="photo">照片</string>
+    <string name="open">打开</string>
+    <string name="close">关闭</string>
+    <string name="setting">设置</string>
+    <string name="search">搜索</string>
+    <string name="username">张建浩</string>
+
+    <string name="upload_img">上传照片</string>
+    <string name="find">查找</string>
+    <string name="take_photo">拍照</string>
+    <string name="share">分享</string>
+    <string name="save_failure">保存失败</string>
+</resources>

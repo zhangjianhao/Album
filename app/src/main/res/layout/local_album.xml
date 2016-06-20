@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/album_title_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:gravity="top">
+
+        <ImageView
+            android:id="@+id/album_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="@dimen/title_view_left_back_padding_left"
+            android:paddingRight="@dimen/title_view_left_back_padding_right"
+
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back_white_36dp" />
+
+        <TextView
+            android:id="@+id/album_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:singleLine="true"
+            android:text="选择相册"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_18" />
+
+        <ImageView
+            android:id="@+id/loacal_album_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/padding_15"
+            android:src="@drawable/ic_camera_alt_white_18dp" />
+    </RelativeLayout>
+
+    <View style="@style/dividing_line_style" />
+
+
+    <ListView
+        android:id="@+id/local_album_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/padding_10"
+        android:visibility="gone"
+        android:dividerHeight="@dimen/dividing_0.5" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+       <ProgressBar
+           android:id="@+id/load_album_progress"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           />
+    </LinearLayout>
+</LinearLayout>
