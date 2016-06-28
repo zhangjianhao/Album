@@ -19,7 +19,6 @@ import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -38,11 +37,7 @@ import com.zjianhao.widget.MatrixImageView;
 import java.util.List;
 
 
-/**
- * @author linjizong
- * @Description:欢迎页测试
- * @date 2015-4-11
- */
+
 public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.OnSingleTapListener, View.OnClickListener
 ,CompoundButton.OnCheckedChangeListener{
 
@@ -241,23 +236,19 @@ public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.On
             }
         } else {
             if (!checkedItems.contains(compoundButton.getTag())) {
-                if(checkedItems.size()+LocalImageHelper.getInstance().getCurrentSize()>=9){
-                    Toast.makeText(this,"最多选择9张图片", Toast.LENGTH_SHORT).show();
-                    compoundButton.setChecked(false);
-                    return;
-                }
+
                 checkedItems.add((LocalImageHelper.LocalFile) compoundButton.getTag());
             }
         }
         if (checkedItems.size()+ LocalImageHelper.getInstance().getCurrentSize()> 0) {
-            finish.setText("完成(" + (checkedItems.size()+LocalImageHelper.getInstance().getCurrentSize()) + "/9)");
+            finish.setText("已选择(" + (checkedItems.size()+LocalImageHelper.getInstance().getCurrentSize()) + ")");
             finish.setEnabled(true);
-            headerFinish.setText("完成(" +(checkedItems.size()+LocalImageHelper.getInstance().getCurrentSize()) + "/9)");
+            headerFinish.setText("已选择(" +(checkedItems.size()+LocalImageHelper.getInstance().getCurrentSize()) + ")");
             headerFinish.setEnabled(true);
         } else {
-            finish.setText("完成");
+            finish.setText("已选择(0)");
             finish.setEnabled(false);
-            headerFinish.setText("完成");
+            headerFinish.setText("已选择(0)");
             headerFinish.setEnabled(false);
         }
     }

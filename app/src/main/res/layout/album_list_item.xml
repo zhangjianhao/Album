@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_gray_bg_selector"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/album_item_thumbnail"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_marginRight="@dimen/padding_10"
+        android:layout_marginTop="@dimen/padding_3"
+        android:layout_marginBottom="@dimen/padding_3"
+
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/album_name"
+        android:gravity="center_vertical|left"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:textSize="@dimen/textsize_17"
+        android:textColor="@color/gray_3"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:layout_height="fill_parent" />
+
+    <TextView
+        android:id="@+id/album_photo_size"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|right"
+        android:textSize="15dp"
+        android:textColor="@color/txt_gray"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:text="2003"
+        android:layout_marginRight="10dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_arrow_black_go_24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/padding_10"
+        android:layout_marginRight="@dimen/padding_10"
+        android:layout_height="wrap_content" />
+</LinearLayout>

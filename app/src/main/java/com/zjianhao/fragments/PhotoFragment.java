@@ -1,5 +1,6 @@
 package com.zjianhao.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,26 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 
 import com.zjianhao.adapter.PhotoAdapter;
 import com.zjianhao.album.R;
 import com.zjianhao.bean.Album;
 import com.zjianhao.bean.GridPhoto;
+import com.zjianhao.bean.Photo;
 import com.zjianhao.presenter.AlbumPresenter;
+import com.zjianhao.ui.PhotoDetailAty;
 import com.zjianhao.utils.LogUtil;
-import com.zjianhao.widget.AlbumViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
@@ -37,18 +33,15 @@ import butterknife.OnClick;
  * the author's website:http://www.zjianhao.cn
  * the author's github: https://github.com/zhangjianhao
  */
-public class PhotoFragment extends Fragment {
-    @InjectView(R.id.photo_list)
+public class PhotoFragment extends Fragment implements PhotoAdapter.OnPhotoItemClickListener {
+
     RecyclerView photoList;
-    @InjectView(R.id.photo_detail_pager)
-    AlbumViewPager photoDetailPager;
-    @InjectView(R.id.photo_detail_back)
-    ImageView photoDetailBack;
-    @InjectView(R.id.album_item_header_bar)
-    RelativeLayout albumItemHeaderBar;
-    @InjectView(R.id.photo_detail_frame)
-    FrameLayout photoDetailFrame;
+
+
     private PhotoAdapter adapter;
+    private ProgressBar loadProgress;
+
+
 
     private List<GridPhoto> photos = new ArrayList<>();
     private Handler handler = new Handler() {
@@ -57,9 +50,9 @@ public class PhotoFragment extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0x00:
+                    loadProgress.setVisibility(View.GONE);
                     adapter.setData(photos);
                     adapter.notifyDataSetChanged();
-
                     break;
             }
 
@@ -70,11 +63,13 @@ public class PhotoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.photo_list_main, container, false);
-        ButterKnife.inject(this, view);
+        photoList = (RecyclerView)view.findViewById(R.id.photo_list);
+        loadProgress = (ProgressBar)view.findViewById(R.id.load_camera_progress);
 
         photoList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new PhotoAdapter(getActivity(), photos);
         photoList.setAdapter(adapter);
+        adapter.setOnPhotoItemClickListener(this);
 
 
         getdata();
@@ -111,33 +106,22 @@ public class PhotoFragment extends Fragment {
 
     @OnClick(R.id.photo_detail_back)
     public void onClick() {
-
-    }
-
-    public void showDetailViewPager(){
-        photoDetailFrame.setVisibility(View.VISIBLE);
-        AnimationSet set = new AnimationSet(true);
-        ScaleAnimation scaleAnimation = new ScaleAnimation((float) 0.9, 1, (float) 0.9, 1, photoDetailFrame.getWidth() / 2, photoDetailFrame.getHeight() / 2);
-        scaleAnimation.setDuration(300);
-        set.addAnimation(scaleAnimation);
-        AlphaAnimation alphaAnimation = new AlphaAnimation((float) 0.1, 1);
-        alphaAnimation.setDuration(200);
-        set.addAnimation(alphaAnimation);
-        photoDetailFrame.startAnimation(set);
     }
 
 
-    public void hideDetailViewPager(){
-        photoDetailFrame.setVisibility(View.GONE);
-        AnimationSet set = new AnimationSet(true);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1, (float) 0.9, 1, (float) 0.9, photoDetailFrame.getWidth() / 2, photoDetailFrame.getHeight() / 2);
-        scaleAnimation.setDuration(200);
-        set.addAnimation(scaleAnimation);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        alphaAnimation.setDuration(200);
-        set.addAnimation(alphaAnimation);
-        photoDetailFrame.startAnimation(set);
+
+    @Override
+    public void OnPhotoItemClick(Photo photo, int listPosition, int gridPosition) {
+
+        Intent intent = new Intent(getActivity(), PhotoDetailAty.class);
+        intent.putExtra("photo",photo);
+        getActivity().startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.activity_enter_anim,0);
+
+//        showDetailViewPager(photo);
     }
+
+
 }
 
 

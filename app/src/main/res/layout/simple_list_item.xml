@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
 
-    <com.zjianhao.widget.FilterImageView
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
@@ -14,8 +14,8 @@
 
     <CheckBox
         android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="right|top"
         android:background="@drawable/picture_setting_album_checkbox"
         android:button="@null"

@@ -23,6 +23,19 @@
 
         <activity android:name="com.zjianhao.ui.LocalAlbum"/>
         <activity android:name="com.zjianhao.ui.LocalAlbumDetail"/>
+        <activity android:name="com.zjianhao.ui.AlbumDetailAty"/>
+        <activity android:name="com.zjianhao.ui.PhotoDetailAty"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            />
+        <activity android:name="com.zjianhao.ui.AdvancedSearchAty"
+            android:windowSoftInputMode="adjustResize"
+
+            />
+        <activity android:name="com.zjianhao.ui.AmbigiousSearchAty"
+
+            />
+
+        <activity android:name="com.zjianhao.ui.PhotoInfoAty"/>
     </application>
 
 </manifest>

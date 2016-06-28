@@ -20,7 +20,7 @@
             android:paddingLeft="@dimen/title_view_left_back_padding_left"
             android:paddingRight="@dimen/title_view_left_back_padding_right"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_arrow_back_white_36dp" />
+            android:src="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
             android:id="@+id/album_title"
@@ -45,8 +45,8 @@
             android:gravity="center"
             android:background="@drawable/album_finish"
             android:textColor="#ffffff"
-            android:layout_marginRight="10dp"
-            android:text="完成"
+            android:layout_marginRight="20dp"
+            android:text="已选择(0)"
             android:layout_height="30dip" />
 
     </RelativeLayout>
@@ -69,7 +69,7 @@
         android:id="@+id/pagerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <com.zjianhao.widget.AlbumViewPager
             android:id="@+id/albumviewpager"
@@ -91,7 +91,7 @@
                 android:paddingLeft="@dimen/title_view_left_back_padding_left"
                 android:paddingRight="5.0dip"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_arrow_back_white_36dp" />
+                android:src="@drawable/ic_arrow_back_white_24dp" />
 
             <TextView
                 android:id="@+id/header_bar_photo_count"
@@ -116,7 +116,7 @@
                 android:background="@drawable/album_finish"
                 android:textColor="#ffffff"
                 android:layout_marginRight="@dimen/padding_10"
-                android:text="完成"
+                android:text="已选择(0)"
                 android:layout_height="30dip" />
 
             <CheckBox

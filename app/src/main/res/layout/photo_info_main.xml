@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_layout"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+
+        >
+
+        <TextView
+            android:id="@+id/info_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拍摄时间:"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:textColor="@color/text_gray"
+
+            />
+
+        <TextView
+            android:id="@+id/info_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2016年6月6日 12:45"
+            android:layout_toRightOf="@+id/info_time"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+
+        <TextView
+            android:id="@+id/info_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="星期日"
+            android:layout_below="@+id/info_time_tv"
+            android:layout_alignLeft="@id/info_time_tv"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/text_gray"
+
+            />
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+
+        >
+
+        <TextView
+            android:id="@+id/info_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/file_info"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:textColor="@color/text_gray"
+
+            />
+
+        <TextView
+            android:id="@+id/info_filename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IMg304505-45454.jpg"
+            android:layout_toRightOf="@+id/info_file"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+
+        <TextView
+            android:id="@+id/info_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.98MB"
+            android:layout_below="@+id/info_filename"
+            android:layout_alignLeft="@id/info_filename"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/text_gray"
+
+            />
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+
+        >
+
+        <TextView
+            android:id="@+id/info_filepath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filepath"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:textColor="@color/text_gray"
+
+            />
+
+        <TextView
+            android:id="@+id/info_filepath_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/storage/emulate0/DCIM/Camera/23435355435444354.jpg"
+            android:layout_toRightOf="@+id/info_filepath"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+
+        >
+
+        <TextView
+            android:id="@+id/info_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拍摄地点"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:textColor="@color/text_gray"
+
+            />
+
+        <TextView
+            android:id="@+id/info_location_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无"
+            android:layout_toRightOf="@+id/info_location"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxLines="5"
+            />
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

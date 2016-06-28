@@ -106,10 +106,7 @@ public class LocalAlbum extends BaseActivity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(LocalImageHelper.getInstance().getCurrentSize()+LocalImageHelper.getInstance().getCheckedItems().size()>=9){
-                Toast.makeText(LocalAlbum.this,"最多选择9张图片", Toast.LENGTH_SHORT).show();
-                return;
-            }
+
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             //  拍照后保存图片的绝对路径
             String cameraPath = LocalImageHelper.getInstance().setCameraImgPath();

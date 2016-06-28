@@ -10,10 +10,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.zjianhao.bean.Album;
 import com.zjianhao.common.LocalImageHelper;
 import com.zjianhao.utils.LogUtil;
 
 import java.io.File;
+import java.util.List;
 
 //
 
@@ -31,7 +33,25 @@ public class AppContext extends Application {
     private static AppContext appContext = null;
     private Display display;
 
+    private List<Album> albums;
 
+    private Album cameraAlbum;
+
+    public Album getCameraAlbum() {
+        return cameraAlbum;
+    }
+
+    public void setCameraAlbum(Album cameraAlbum) {
+        this.cameraAlbum = cameraAlbum;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
 
     @Override
     public void onCreate() {
@@ -40,6 +60,8 @@ public class AppContext extends Application {
         appContext = this;
         init();
     }
+
+
 
     public static AppContext getInstance() {
         return appContext;

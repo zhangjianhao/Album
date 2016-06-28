@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    >
+
+
+
+        <com.zjianhao.view.TouchImageView
+            android:id="@+id/photo_detail_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="matrix"
+            android:layout_gravity="center"
+            />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/album_header_bar_height"
+        android:background="@null" >
+
+        <ImageView
+            android:id="@+id/photo_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="@dimen/title_view_left_back_padding_left"
+            android:paddingRight="5.0dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
+        <TextView
+            android:id="@+id/photo_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IMG-2035_34-443"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/photo_detail_back"
+            android:layout_marginLeft="10dp"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:background="@color/mid_transparent"
+        >
+
+        <LinearLayout
+            android:id="@+id/photo_send_ll"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:layout_toLeftOf="@+id/photo_delete_ll"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_send_white_18dp"
+                android:layout_gravity="center_horizontal"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/send"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/photo_delete_ll"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete_white_18dp"
+                android:layout_gravity="center_horizontal"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/delete"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/photo_detail_ll"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:layout_toRightOf="@+id/photo_delete_ll"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_photo_white_18dp"
+                android:layout_gravity="center_horizontal"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/detail"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+</FrameLayout>

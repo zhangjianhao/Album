@@ -245,6 +245,5 @@ public class LocalImageHelper {
         public void setOrientation(int exifOrientation) {
             orientation =  exifOrientation;
         }
-
     }
 }

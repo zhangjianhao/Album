@@ -20,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,8 @@ import android.view.View;
 import com.zjianhao.adapter.MainTabAdapter;
 import com.zjianhao.fragments.AlbumFragment;
 import com.zjianhao.fragments.PhotoFragment;
+import com.zjianhao.ui.AdvancedSearchAty;
+import com.zjianhao.ui.AmbigiousSearchAty;
 import com.zjianhao.ui.LocalAlbum;
 import com.zjianhao.utils.ToastUtil;
 
@@ -84,6 +87,11 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             }
         });
 
+
+
+
+
+
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, mainToolbar, R.string.open, R.string.close);
         mActionBarDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -125,7 +133,9 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
         switch (item.getItemId()) {
             case R.id.search_menu:
-                ToastUtil.show(this,"search");
+                Intent intent = new Intent(this, AmbigiousSearchAty.class);
+                startActivity(intent);
+
                 break;
             case R.id.share_menu:
                 ToastUtil.show(this,"search");
@@ -149,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         intent.addCategory("android.intent.category.DEFAULT");
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         startActivityForResult(intent, 1);
+
 
     }
 
@@ -215,13 +226,25 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()){
             case R.id.nav_upload_photo:
-                Intent intent = new Intent(this, LocalAlbum.class);
+                 intent = new Intent(this, LocalAlbum.class);
                 startActivity(intent);
+
+                break;
+            case R.id.nav_search_photo:
+                intent = new Intent(this, AdvancedSearchAty.class);
+                startActivity(intent);
+
                 break;
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
     }
 }

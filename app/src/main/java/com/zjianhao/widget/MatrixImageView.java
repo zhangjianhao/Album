@@ -13,13 +13,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-/**
- * @ClassName: MatrixImageView
- * @Description:  带放大、缩小、移动效果的ImageView
- * @author LinJ
- * @date 2015-1-7 上午11:15:07 
- *
- */
+
 public class MatrixImageView extends ImageView {
 	public final static String TAG="MatrixImageView";
 	private GestureDetector mGestureDetector;

@@ -10,7 +10,16 @@
 
     <string name="upload_img">上传照片</string>
     <string name="find">查找</string>
+    <string name="advanced_finding">高级搜索</string>
     <string name="take_photo">拍照</string>
     <string name="share">分享</string>
     <string name="save_failure">保存失败</string>
+    <string name="send">发送</string>
+    <string name="detail">详情</string>
+    <string name="delete">删除</string>
+    <string name="file_info">文件信息:</string>
+    <string name="filepath">文件路径</string>
+    <string name="photo_detail">图片详情</string>
+    <string name="sorry_not_found">抱歉没有找到符合条件的内容</string>
+    <string name="searching">正在搜索中...</string>
 </resources>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/windows_background"
+    >
+
+    <include
+        layout="@layout/toolbar_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+
+
+    <RelativeLayout
+        android:id="@+id/photo_name_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/photo_name_state"
+            android:layout_marginLeft="20dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/photo_name_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:hint="照片名称"
+
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/photo_name_state"
+            android:gravity="center">
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <CheckBox
+            android:id="@+id/photo_name_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:checked="false"
+             />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/photo_date_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/photo_name_rl"
+        android:layout_marginTop="30dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/photo_start_date_tl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
+
+            <EditText
+                android:id="@+id/photo_start_date"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="开始日期" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <CheckBox
+            android:id="@+id/photo_date_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:checked="false"
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/photo_end_date_tl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/photo_date_state"
+            >
+
+
+            <EditText
+                android:id="@+id/photo_end_date"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="终止日期" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/middle_line"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/photo_start_date_tl"
+            android:layout_toLeftOf="@+id/photo_end_date_tl"
+            android:gravity="center"
+            android:text="——"
+            />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/photo_location_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/photo_date_rl"
+        android:layout_marginTop="30dp"
+
+        >
+
+        <CheckBox
+            android:id="@+id/photo_location_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:checked="false"
+             />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toLeftOf="@+id/photo_location_state"
+            >
+
+
+            <EditText
+                android:id="@+id/photo_location_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="拍摄地点"
+
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/photo_location_rl"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_style"
+        android:text="搜索"
+        android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>
