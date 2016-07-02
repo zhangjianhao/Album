@@ -1,5 +1,6 @@
 package com.zjianhao.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ import com.zjianhao.album.R;
 import com.zjianhao.bean.Album;
 import com.zjianhao.bean.Photo;
 import com.zjianhao.presenter.PhotoPresenter;
+import com.zjianhao.utils.DateUtil;
 import com.zjianhao.utils.LogUtil;
 import com.zjianhao.utils.TimeUtil;
 import com.zjianhao.utils.ToastUtil;
@@ -54,6 +57,7 @@ public class AmbigiousSearchAty extends AppCompatActivity implements PhotoAdapte
     RelativeLayout isSearching;
     private PhotoPresenter presenter;
     private ArrayList<Photo> resultPhotos = new ArrayList<>();
+    private InputMethodManager inputManager;
 
     private GridAdapter adapter;
     private Handler handler = new Handler() {
@@ -95,14 +99,23 @@ public class AmbigiousSearchAty extends AppCompatActivity implements PhotoAdapte
         ButterKnife.inject(this);
         setSupportActionBar(mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         if (android.os.Build.VERSION.SDK_INT>=21)
             mainToolbar.setElevation(20);
 
         if (getIntent() != null){
+            LogUtil.e(this,"intent not null");
             ArrayList<Photo> result  =getIntent().getParcelableArrayListExtra("search_result");
             if (result != null && result.size()>1)
                 resultPhotos = result;
+            else if (result!= null && result.size() == 0 ){
+                searchNotFound.setVisibility(View.VISIBLE);
+            }
+
         }
+        if (inputManager.isActive())
+            inputManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,InputMethodManager.HIDE_NOT_ALWAYS);
 
         AppContext application = (AppContext) getApplication();
         List<Album> albums = application.getAlbums();
@@ -114,6 +127,14 @@ public class AmbigiousSearchAty extends AppCompatActivity implements PhotoAdapte
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (inputManager.isActive())
+            inputManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     @OnClick({R.id.search_back, R.id.search_command})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -122,6 +143,8 @@ public class AmbigiousSearchAty extends AppCompatActivity implements PhotoAdapte
                 break;
 
             case R.id.search_command:
+                searchKeyword.clearFocus();
+                inputManager.hideSoftInputFromWindow(searchKeyword.getWindowToken(),0);
                 if (TextUtils.isEmpty(searchKeyword.getText()))
                     ToastUtil.show(this, "请输入内容");
                 else {
@@ -130,11 +153,9 @@ public class AmbigiousSearchAty extends AppCompatActivity implements PhotoAdapte
 
                     searchResultPhotos.setVisibility(View.GONE);
                     String keyword = searchKeyword.getText().toString().trim();
-                    if (isDate(keyword)){
-                        LogUtil.e(this,"is date");
-                        keyword = keyword.replace("年","-").replace("月","-").replace("日","");
+                    if (DateUtil.isDate(keyword)){
+                        keyword = DateUtil.parseToDate(keyword);
                         searchByDate(keyword);
-
 
                     }
                     else searchByName(keyword);
@@ -145,23 +166,6 @@ public class AmbigiousSearchAty extends AppCompatActivity implements PhotoAdapte
     }
 
 
-    public boolean isDate(String keyword) {
-        if (keyword.matches("\\d{4}年"))
-            return true;
-        if (keyword.matches("\\d{2}月") || keyword.matches("\\d月"))
-            return true;
-        if (keyword.matches("\\d{2}日") || keyword.matches("\\d日"))
-            return true;
-        if (keyword.matches("\\d{4}-\\d{1,2}") || keyword.matches("\\d{4}年\\d{1,2}月"))
-            return true;
-        if (keyword.matches("\\d{1,2}-\\d{1,2}") || keyword.matches("\\d{1,2}月\\d{1,2}日"))
-            return true;
-
-        if (keyword.matches("\\d{4}-\\d{1,2}-\\d{1,2}") ||
-                keyword.matches("\\d{4}年\\d{1,2}月\\d{1,2}日"))
-            return true;
-        return false;
-    }
 
 
 

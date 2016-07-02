@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zjianhao.bean.Photo;
+import com.zjianhao.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,20 +79,23 @@ public class GridAdapter extends BaseAdapter {
             imageView.setLayoutParams(new GridView.LayoutParams(w, w));//设置ImageView对象布局
 
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null)
-                        listener.OnPhotoItemClick(photos.get(position),listPosition,position);
-                }
-            });
+
         }
         else {
             imageView = (ImageView) convertView;
         }
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtil.e(GridAdapter.this,"POsition:"+position);
+                if (listener != null)
+                    listener.OnPhotoItemClick(photos.get(position),listPosition,position);
+            }
+        });
 
-        imageLoader.displayImage("file://"+photos.get(position).getImgUrl(),imageView);
+
+        imageLoader.displayImage(photos.get(position).getImgUrl(),imageView);
         return imageView;
     }
 

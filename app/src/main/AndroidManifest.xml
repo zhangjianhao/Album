@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
@@ -13,7 +14,9 @@
         android:name=".AppContext"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,8 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.zjianhao.ui.LocalAlbum"/>
-        <activity android:name="com.zjianhao.ui.LocalAlbumDetail"/>
         <activity android:name="com.zjianhao.ui.AlbumDetailAty"/>
         <activity android:name="com.zjianhao.ui.PhotoDetailAty"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -36,6 +37,16 @@
             />
 
         <activity android:name="com.zjianhao.ui.PhotoInfoAty"/>
+
+        <activity android:name="com.zjianhao.ui.RegistAty"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity android:name="com.zjianhao.ui.LoginAty"/>
+
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+        <service android:name="com.zjianhao.service.UploadService"/>
     </application>
 
 </manifest>

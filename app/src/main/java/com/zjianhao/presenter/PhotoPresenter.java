@@ -39,6 +39,7 @@ public class PhotoPresenter {
 
 
     public ArrayList<Photo> getPhotoByDateInterval(String startDate,String endDate){
+        LogUtil.v(this,startDate+":"+endDate);
         ArrayList<Photo> photos = new ArrayList<>();
         GridPhoto start = new GridPhoto();
         start.setDateLabel(startDate);
@@ -47,7 +48,7 @@ public class PhotoPresenter {
         for (Album album : albums) {
             ArrayList<GridPhoto> gridPhotos = album.mapToList();
             for (GridPhoto gridPhoto : gridPhotos) {
-                if (gridPhoto.compareTo(start) >0 && gridPhoto.compareTo(end)<0)
+                if (gridPhoto.compareTo(start) <=0 && gridPhoto.compareTo(end)>=0)
                     photos.addAll(gridPhoto.getPhotos());
             }
 

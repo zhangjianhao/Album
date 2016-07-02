@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentActivity;
 import com.zjianhao.album.AppContext;
 import com.zjianhao.bean.Album;
 import com.zjianhao.bean.Photo;
-import com.zjianhao.utils.LogUtil;
 import com.zjianhao.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -70,12 +69,12 @@ public class AlbumPresenter {
             photo.setId(id);
             photo.setName(photoName);
             photo.setDate(date);
-            photo.setImgUrl(albumUrl);
+            photo.setImgUrl("file://"+albumUrl);
             photo.setLatitude(latitude);
             photo.setLongitude(longitude);
             String dateStr = TimeUtil.parseIntDate(date);
-            LogUtil.v(this,"date:"+dateStr);
-            LogUtil.e(this,latitude+":"+longitude);
+//            LogUtil.v(this,"date:"+dateStr);
+//            LogUtil.e(this,latitude+":"+longitude);
 
 
 //            LogUtil.v(this,albumUrl);

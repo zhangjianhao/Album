@@ -110,7 +110,9 @@ public class AdvancedSearchAty extends AppCompatActivity implements View.OnFocus
                 showDatePicker(R.id.photo_end_date);
                 break;
             case R.id.search_btn:
-                if (check() !=0){
+                int check = check();
+                if ( check !=0){
+                    if (check != -1)
                     search();
                 }else {
                     ToastUtil.show(this,"请至少选择一种搜索条件");

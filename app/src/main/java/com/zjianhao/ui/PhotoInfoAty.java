@@ -105,7 +105,11 @@ public class PhotoInfoAty extends AppCompatActivity {
         infoFilename.setText(photo.getName());
         File file = new File(photo.getImgUrl());
         LogUtil.v(this,"----------"+Environment.DIRECTORY_PICTURES);
-        String size = getFileSize(file.length());
+        long len = file.length();
+        String size;
+        if (len>1)
+        size = getFileSize(len);
+        else size="未知";
         infoSize.setText(size);
         infoFilepathTv.setText(photo.getImgUrl());
         getAddress(photo.getLatitude(),photo.getLongitude());

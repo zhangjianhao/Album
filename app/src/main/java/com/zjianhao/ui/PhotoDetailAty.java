@@ -54,7 +54,7 @@ public class PhotoDetailAty extends Activity {
         imageloader = ImageLoader.getInstance();
         photo = (Photo) getIntent().getParcelableExtra("photo");
 
-        imageloader.displayImage("file://" + photo.getImgUrl(), photoDetailIv);
+        imageloader.displayImage(photo.getImgUrl(), photoDetailIv);
         photoName.setText(photo.getName());
     }
 

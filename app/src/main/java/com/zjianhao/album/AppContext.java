@@ -11,7 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.zjianhao.bean.Album;
-import com.zjianhao.common.LocalImageHelper;
+import com.zjianhao.bean.User;
 import com.zjianhao.utils.LogUtil;
 
 import java.io.File;
@@ -62,6 +62,15 @@ public class AppContext extends Application {
     }
 
 
+    public User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public static AppContext getInstance() {
         return appContext;
@@ -73,7 +82,6 @@ public class AppContext extends Application {
     private void init() {
         initImageLoader(getApplicationContext());
         //本地图片辅助类初始化
-        LocalImageHelper.init(this);
         if (display == null) {
             WindowManager windowManager = (WindowManager)
                     getSystemService(Context.WINDOW_SERVICE);

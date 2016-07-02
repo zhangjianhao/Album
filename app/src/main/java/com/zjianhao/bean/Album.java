@@ -82,7 +82,6 @@ public class Album {
             photo.setDateLabel(key);
             photo.setPhotos(photoMap.get(key));
             gridPhotos.add(photo);
-
         }
 
         Collections.sort(gridPhotos);

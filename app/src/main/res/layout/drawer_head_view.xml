@@ -6,6 +6,7 @@
     android:background="@color/colorAccent">
 
     <ImageView
+        android:id="@+id/log_out"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/common_full_open_on_phone"
@@ -26,10 +27,11 @@
         />
 
     <TextView
+        android:id="@+id/head_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="@string/username"
+        android:text="请先登陆"
         android:layout_below="@+id/head_img"
         android:layout_marginTop="10dp"
         android:textColor="@color/white"

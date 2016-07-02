@@ -3,12 +3,20 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/photo_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/photoRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/photo_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
     <ProgressBar
         android:id="@+id/load_camera_progress"
@@ -16,6 +24,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
 
+        />
+
+    <TextView
+        android:id="@+id/click_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/click_to_login"
+        android:textColor="@color/text_gray"
+        android:layout_gravity="center"
+        android:visibility="gone"
         />
 
 

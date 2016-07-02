@@ -23,4 +23,11 @@
         <item name="android:background">@color/gray_dividing</item>
     </style>
 
+    <style name="form_edittext">
+        <item name="android:textSize">@dimen/SmallTextSize</item>
+        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">40.0dip</item>
+    </style>
+
 </resources>

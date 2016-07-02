@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windows_background"
+    android:gravity="center"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+
+
+
+
+        <EditText
+            android:id="@+id/username_et"
+            android:background="@null"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:hint="@string/login_username"
+            android:drawableLeft="@drawable/ic_user"
+            android:drawablePadding="20.0dip"
+            android:inputType="textCapCharacters"
+            style="@style/form_edittext" />
+        <View
+            android:background="@color/horizontal_line_bg"
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip" />
+
+        <EditText android:id="@+id/password_et"
+            android:background="@null"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:hint="@string/password"
+            android:password="true"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawablePadding="20.0dip"
+            style="@style/form_edittext" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+
+
+        <CheckBox
+            android:id="@+id/remember_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+          />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remember_password"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+
+
+        <CheckBox
+            android:id="@+id/auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_login"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/btn_bg_style"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            >
+            <TextView
+                android:id="@+id/reget_password_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reget_password"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="11dp"
+                android:textColor="@color/dark_blue"
+                android:visibility="gone"
+
+                />
+            <TextView
+                android:id="@+id/regist_now_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/regist_now"
+                android:layout_marginRight="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/dark_blue"
+
+                />
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+    </LinearLayout>

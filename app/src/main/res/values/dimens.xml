@@ -4,6 +4,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
+    <dimen name="LargeTextSize">16.0sp</dimen>
+    <dimen name="SmallTextSize">14.0sp</dimen>
+
+
     <!-- Title -->
     <dimen name="title_view_left_back_padding_left">12.0dip</dimen>
     <dimen name="title_view_left_back_padding_right">12.0dip</dimen>

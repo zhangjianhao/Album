@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.OnPhotoItemC
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0x00:
+                    refreshView.setRefreshing(false);
                     loadProgress.setVisibility(View.GONE);
                     adapter.setData(photos);
                     adapter.notifyDataSetChanged();
@@ -58,11 +60,19 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.OnPhotoItemC
 
         }
     };
+    private SwipeRefreshLayout refreshView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.photo_list_main, container, false);
+        refreshView = (SwipeRefreshLayout)view.findViewById(R.id.photoRefresh);
+        refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getdata();
+            }
+        });
         photoList = (RecyclerView)view.findViewById(R.id.photo_list);
         loadProgress = (ProgressBar)view.findViewById(R.id.load_camera_progress);
 

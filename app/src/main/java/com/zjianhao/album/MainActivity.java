@@ -1,20 +1,26 @@
 package com.zjianhao.album;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,13 +30,20 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zjianhao.adapter.MainTabAdapter;
+import com.zjianhao.bean.User;
 import com.zjianhao.fragments.AlbumFragment;
+import com.zjianhao.fragments.CloudFragment;
 import com.zjianhao.fragments.PhotoFragment;
+import com.zjianhao.service.UploadService;
 import com.zjianhao.ui.AdvancedSearchAty;
 import com.zjianhao.ui.AmbigiousSearchAty;
-import com.zjianhao.ui.LocalAlbum;
+import com.zjianhao.ui.LoginAty;
+import com.zjianhao.utils.LogUtil;
 import com.zjianhao.utils.ToastUtil;
 
 import java.io.File;
@@ -43,6 +56,7 @@ import java.util.Date;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 public class MainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener{
 
@@ -57,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     @InjectView(R.id.navigation_view)
     NavigationView navigationView;
 
+    private ImageView logOutIv;
+    private TextView headUsername;
+
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @InjectView(R.id.take_photo_fb)
@@ -67,8 +84,10 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     private ArrayList<String> titles = new ArrayList<>();
     private PhotoFragment photoFragment;
     private AlbumFragment albumFragment;
+    private CloudFragment cloudFragment;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private MediaScannerConnection msc;
+    private ArrayList<String> selectPath = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,15 +118,49 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout.setDrawerListener(mActionBarDrawerToggle);
+
+        callPermission();
         init();
         adapter = new MainTabAdapter(getSupportFragmentManager(), fragments, titles);
         viewpager.setAdapter(adapter);
         mainTabLayout.setupWithViewPager(viewpager);
         mainTabLayout.setTabMode(TabLayout.MODE_FIXED);
 
-        navigationView.inflateHeaderView(R.layout.drawer_head_view);
+        View view = navigationView.inflateHeaderView(R.layout.drawer_head_view);
         navigationView.inflateMenu(R.menu.drawable_home_main);
         navigationView.setNavigationItemSelectedListener(this);
+        final AppContext application = (AppContext) getApplication();
+        final User user = application.getUser();
+
+        headUsername = (TextView)view.findViewById(R.id.head_username);
+        headUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (application.getUser() == null){
+                    Intent intent = new Intent(MainActivity.this, LoginAty.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        });
+
+        if (user != null && user.getUsername()!=null) {
+            headUsername.setText(user.getUsername()+"");
+        }
+
+        logOutIv = (ImageView)view.findViewById(R.id.log_out);
+        logOutIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                application.setUser(null);
+                headUsername.setText("请登陆");
+                ToastUtil.show(MainActivity.this,"已退出登陆");
+
+            }
+        });
+
+
 
     }
 
@@ -115,10 +168,13 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     public void init() {
         titles.add(getString(R.string.photo));
         titles.add(getString(R.string.album));
+        titles.add(getString(R.string.cloud));
         photoFragment = new PhotoFragment();
         fragments.add(photoFragment);
         albumFragment = new AlbumFragment();
         fragments.add(albumFragment);
+        cloudFragment = new CloudFragment();
+        fragments.add(cloudFragment);
 
     }
 
@@ -153,12 +209,43 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     }
 
+
+    public void callPermission(){
+        if (Build.VERSION.SDK_INT >= 23) {
+            int checkCallStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if(checkCallStoragePermission != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0x01);
+            }
+
+
+            int resultCoarsePermission = ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA);
+            if (resultCoarsePermission != PackageManager.PERMISSION_GRANTED)
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},0x02);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 0x01:
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED)
+                    Toast.makeText(MainActivity.this,"获取存储权限失败,将无法读取数据",Toast.LENGTH_SHORT).show();
+                break;
+            case 0x02:
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED)
+                    Toast.makeText(MainActivity.this,"获取拍照权限失败,将无法进行拍照",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
     public void takePicture(){
         Intent intent = new Intent();
         intent.setAction("android.media.action.IMAGE_CAPTURE");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 0x01);
 
 
     }
@@ -166,11 +253,29 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
-            case 1:
+            case 0x01:
                 if (resultCode == Activity.RESULT_OK){
                    savePicture(data);
                 }
 
+                break;
+            case 0x02:
+                if(resultCode == RESULT_OK && data != null){
+
+                    if(resultCode == RESULT_OK){
+                        ArrayList<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                        if (path.size()>1){
+                            Intent intent = new Intent(this, UploadService.class);
+                            intent.putStringArrayListExtra("upload_photos",path);
+                            startService(intent);
+                            ToastUtil.show(this,"正在开始上传...");
+                        }
+                        for (String s : path) {
+                            LogUtil.v(MainActivity.this,s);
+                        }
+                    }
+
+                }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -227,10 +332,26 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         Intent intent;
+//        mActionBarDrawerToggle.syncState();
+        drawerLayout.closeDrawers();
         switch (item.getItemId()){
+
             case R.id.nav_upload_photo:
-                 intent = new Intent(this, LocalAlbum.class);
-                startActivity(intent);
+                AppContext application = (AppContext) getApplication();
+                User user = application.getUser();
+                if (user != null && user.getUsername()!= null){
+                    intent = new Intent(this, MultiImageSelectorActivity.class);
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 100);
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+                    intent.putStringArrayListExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, selectPath);
+                    startActivityForResult(intent, 0x02);
+                }
+
+                else {
+                    ToastUtil.show(this,"上传请先登陆");
+                }
+
 
                 break;
             case R.id.nav_search_photo:
@@ -242,6 +363,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
         return false;
     }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
