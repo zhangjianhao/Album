@@ -3,8 +3,6 @@ package com.zjianhao.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.zjianhao.utils.LogUtil;
-
 /**
  * Created by 张建浩（Clarence) on 2016-6-24 17:30.
  * the author's website:http://www.zjianhao.cn
@@ -61,7 +59,6 @@ public class Photo implements Parcelable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-        LogUtil.e(this,"onset:"+longitude);
     }
 
     public double getLatitude() {
@@ -70,7 +67,6 @@ public class Photo implements Parcelable {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
-        LogUtil.e(this,"onset:"+latitude);
 
     }
 

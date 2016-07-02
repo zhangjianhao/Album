@@ -1,5 +1,6 @@
 package com.zjianhao.service;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Environment;
@@ -7,16 +8,21 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.app.NotificationCompat;
 
 import com.zjianhao.album.AppContext;
+import com.zjianhao.album.R;
 import com.zjianhao.bean.User;
 import com.zjianhao.constants.Constants;
 import com.zjianhao.utils.ImgUtil;
 import com.zjianhao.utils.LogUtil;
+import com.zjianhao.utils.ProgressRequestBody;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,6 +44,8 @@ public class UploadService extends Service {
     private User user;
     ArrayList<File> tempFile = new ArrayList<>();
     final File filepath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/album/");
+    private int currentProgress;
+    private Timer timer;
 
 
     private Handler handler  = new Handler(){
@@ -45,15 +53,26 @@ public class UploadService extends Service {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0x00:
+
+                    break;
+                case 0x01:
+                    if (timer != null)
+                        timer.cancel();
+                    currentProgress = 100;
+                    mNotification.setContentText(currentProgress+"%");
+                    mNotification.setProgress(100,100,false);
+                    mNotification.setContentTitle("上传完成！");
+                    mNotificationManager.notify(1,mNotification.build());
                     LogUtil.v(this,"上传完成,压缩了："+tempFile.size());
                     delteTempFile();
                     break;
-                case 0x01:
-                    break;
+
             }
             super.handleMessage(msg);
         }
     };
+    private NotificationManager mNotificationManager;
+    private NotificationCompat.Builder mNotification;
 
     @Nullable
     @Override
@@ -76,6 +95,24 @@ public class UploadService extends Service {
                 startUpload();
             }
         }).start();
+
+
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mNotification = new NotificationCompat.Builder(this);
+        mNotification.setContentTitle("正在上传照片中");
+        mNotification.setSmallIcon(R.mipmap.ic_launcher);
+        mNotification.setContentText("0%");
+        mNotification.setProgress(100,0,false);
+        mNotificationManager.notify(1,mNotification.build());
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mNotification.setContentText(currentProgress+"%");
+                mNotification.setProgress(100,currentProgress,false);
+                mNotificationManager.notify(1,mNotification.build());
+            }
+        },0,500);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -106,7 +143,19 @@ public class UploadService extends Service {
 
         final Request request = new Request.Builder()
                 .url(Constants.UPLOAD_URL)
-                .post(builder.build()).build();
+                .post(new ProgressRequestBody(builder.build(), new ProgressRequestBody.ProgressRequestListener() {
+                    @Override
+                    public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                        LogUtil.v(this,"isdone:"+done);
+                        if (!done)
+                            currentProgress = (int) ((double)bytesWritten/contentLength*100);
+                        else handler.sendEmptyMessage(0x01);
+                        LogUtil.v(this,"progress:"+currentProgress);
+
+
+                    }
+                })).build();
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -116,7 +165,6 @@ public class UploadService extends Service {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 LogUtil.v(this,"response:"+response.body().string());
-                handler.sendEmptyMessage(0x00);
                 response.close();
 
             }
