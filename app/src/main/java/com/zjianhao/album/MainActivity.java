@@ -119,8 +119,10 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
-        callPermission();
         init();
+        callPermission();
+
+
         adapter = new MainTabAdapter(getSupportFragmentManager(), fragments, titles);
         viewpager.setAdapter(adapter);
         mainTabLayout.setupWithViewPager(viewpager);
@@ -169,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         titles.add(getString(R.string.photo));
         titles.add(getString(R.string.album));
         titles.add(getString(R.string.cloud));
+
         photoFragment = new PhotoFragment();
         fragments.add(photoFragment);
         albumFragment = new AlbumFragment();
@@ -176,6 +179,41 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         cloudFragment = new CloudFragment();
         fragments.add(cloudFragment);
 
+    }
+
+    public void callPermission(){
+        if (Build.VERSION.SDK_INT >= 23) {
+            int checkCallStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if(checkCallStoragePermission != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0x01);
+            }
+
+
+
+
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        LogUtil.v(this,"request code:"+requestCode);
+        switch (requestCode) {
+            case 0x01:
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED)
+                    Toast.makeText(this,"获取存储权限失败,将无法读取数据",Toast.LENGTH_SHORT).show();
+                int resultCoarsePermission = ContextCompat.checkSelfPermission(this ,Manifest.permission.CAMERA);
+                if (resultCoarsePermission != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},0x02);
+
+                break;
+            case 0x02:
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED)
+                    Toast.makeText(this,"获取拍照权限失败,将无法进行拍照",Toast.LENGTH_SHORT).show();
+
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -194,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
                 break;
             case R.id.share_menu:
-                ToastUtil.show(this,"search");
+               share();
                 break;
 
         }
@@ -210,35 +248,9 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     }
 
 
-    public void callPermission(){
-        if (Build.VERSION.SDK_INT >= 23) {
-            int checkCallStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if(checkCallStoragePermission != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0x01);
-            }
 
 
-            int resultCoarsePermission = ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA);
-            if (resultCoarsePermission != PackageManager.PERMISSION_GRANTED)
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},0x02);
 
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 0x01:
-                if (grantResults[0] == PackageManager.PERMISSION_DENIED)
-                    Toast.makeText(MainActivity.this,"获取存储权限失败,将无法读取数据",Toast.LENGTH_SHORT).show();
-                break;
-            case 0x02:
-                if (grantResults[0] == PackageManager.PERMISSION_DENIED)
-                    Toast.makeText(MainActivity.this,"获取拍照权限失败,将无法进行拍照",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
     public void takePicture(){
         Intent intent = new Intent();
@@ -350,6 +362,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
                 else {
                     ToastUtil.show(this,"上传请先登陆");
+                    Intent intent1 = new Intent(this,LoginAty.class);
+                    startActivity(intent1);
                 }
 
 
@@ -359,9 +373,26 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
                 startActivity(intent);
 
                 break;
+            case R.id.nav_share:
+                share();
+                break;
+            case R.id.nav_take_picture:
+                takePicture();
+                break;
         }
 
         return false;
+    }
+
+    public void share() {
+
+        Intent intent=new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_information));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(intent, "分享"));
+
     }
 
 

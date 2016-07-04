@@ -117,7 +117,10 @@ public class PhotoDetailAty extends Activity {
 
     public void shareSingleImage() {
         //由文件得到uri
-        Uri imageUri = Uri.fromFile(new File(photo.getImgUrl()));
+        String url = photo.getImgUrl();
+//                .replace("file://","");
+//        Uri imageUri = Uri.fromFile(new File(url));
+        Uri imageUri = imageUri = Uri.parse(photo.getImgUrl());
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);

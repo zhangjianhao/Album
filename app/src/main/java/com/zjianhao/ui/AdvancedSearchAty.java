@@ -220,18 +220,18 @@ public class AdvancedSearchAty extends AppCompatActivity implements View.OnFocus
                 if (dayOfMonth < 10)
                     day = "0" + day;
                 if (which == R.id.photo_start_date) {
-                    photoStartDate.setText(year + "-" + month + "-" + day);
+                    photoStartDate.setText(year + "-" + month+1 + "-" + day);
                     photoEndDate.requestFocus();
 
                 }
                 if (which == R.id.photo_end_date) {
-                    photoEndDate.setText(year + "-" + month + "-" + day);
+                    photoEndDate.setText(year + "-" + month+1 + "-" + day);
                     photoLocationKey.requestFocus();
 
                 }
 
             }
-        }, 2016, 7, 1);
+        }, 2016, 6, 1);
 
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override

@@ -42,12 +42,12 @@ public class AlbumPresenter {
     public interface OnFinishLoadAlbum{
         public void onFinishLoadAlbumListener(ArrayList<Album> albums, Album cameraPhotos);
     }
-    public void getAlbums(FragmentActivity activity) {
+    public ArrayList<Album> getAlbums(FragmentActivity activity) {
         ArrayList<Album> albums = new ArrayList();
         Map<String,Album> map = new HashMap();
         ContentResolver resolver = activity.getContentResolver();
         Cursor cursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[]{MediaStore.Images.Media._ID,MediaStore.Images.ImageColumns.DATA,MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.DATE_TAKEN,MediaStore.Images.Media.BUCKET_DISPLAY_NAME,MediaStore.Images.ImageColumns.LONGITUDE,MediaStore.Images.ImageColumns.LATITUDE}, null, null,  null);
-        if (cursor == null || !cursor.moveToNext()) return ;
+        if (cursor == null || !cursor.moveToNext()) return null;
         cursor.moveToLast();
         Album album;
         Photo photo ;
@@ -57,10 +57,7 @@ public class AlbumPresenter {
             String photoName = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME));
             int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media._ID));
             Long date = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN));
-//            LogUtil.v(this,"id:"+id);
-//            LogUtil.v(this, TimeUtil.parseIntDate(date));
-//            LogUtil.v(this,name);
-//            LogUtil.v(this,photoName);
+
 
             String albumUrl = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA));
             double latitude = cursor.getDouble(cursor.getColumnIndex(MediaStore.Images.ImageColumns.LATITUDE));
@@ -73,11 +70,7 @@ public class AlbumPresenter {
             photo.setLatitude(latitude);
             photo.setLongitude(longitude);
             String dateStr = TimeUtil.parseIntDate(date);
-//            LogUtil.v(this,"date:"+dateStr);
-//            LogUtil.e(this,latitude+":"+longitude);
 
-
-//            LogUtil.v(this,albumUrl);
             if (map.containsKey(name)){
                 Album a = map.get(name);
                 a.autoIncrementSize();
@@ -109,6 +102,7 @@ public class AlbumPresenter {
         for (OnFinishLoadAlbum listener : listeners) {
             listener.onFinishLoadAlbumListener(albums,cameras);
         }
+        return albums;
     }
 
 

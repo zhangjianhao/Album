@@ -17,6 +17,7 @@ import com.zjianhao.constants.Constants;
 import com.zjianhao.utils.ImgUtil;
 import com.zjianhao.utils.LogUtil;
 import com.zjianhao.utils.ProgressRequestBody;
+import com.zjianhao.utils.ToastUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,8 +62,9 @@ public class UploadService extends Service {
                     currentProgress = 100;
                     mNotification.setContentText(currentProgress+"%");
                     mNotification.setProgress(100,100,false);
-                    mNotification.setContentTitle("上传完成！");
+                    mNotification.setContentTitle("照片上传完成！");
                     mNotificationManager.notify(1,mNotification.build());
+                    ToastUtil.show(getApplicationContext(),"上传完成");
                     LogUtil.v(this,"上传完成,压缩了："+tempFile.size());
                     delteTempFile();
                     break;
@@ -133,7 +135,7 @@ public class UploadService extends Service {
         for (int i=0; i<photos.size(); i++) {
             File file = new File(photos.get(i));
             File temp;
-            if (file.length()>1024*80){
+            if (file.length()>1024*100){
                 temp = ImgUtil.compressImage(photos.get(i),filepath.getPath()+"/temp/"+file.getName(),50);
                 tempFile.add(temp);
             }else

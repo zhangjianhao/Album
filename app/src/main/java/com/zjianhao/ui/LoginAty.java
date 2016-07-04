@@ -152,41 +152,6 @@ public class LoginAty extends Activity implements View.OnClickListener {
     }
 
     public void login(String username,String password,String url){
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        RequestParams params = new RequestParams();
-//        params.add("type","user");
-//        params.add("username",username);
-//        params.add("password",password);
-//        client.post(url, params, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int i,Header[] headers, byte[] bytes) {
-//                String result = null;
-//                Log.v(TAG,bytes.length+"");
-//                try {
-//                    result = new String(bytes,"utf-8");
-//                    if ("500".equals(result)){
-//                        Toast.makeText(LoginAty.this,R.string.login_failure,Toast.LENGTH_SHORT).show();
-//                    }else {
-//                        //登陆成功
-//                        Log.v(TAG, result);
-//                        User user = JsonUtil.parseUser(result);
-//                        MyApplication application = (MyApplication) getApplication();
-//                        application.setUser(user);
-//                        Intent intent = new Intent(LoginAty.this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-//                Toast.makeText(LoginAty.this,R.string.connect_failure,Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
 
         OkHttpClient client = new OkHttpClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).build();
         client.connectTimeoutMillis();
@@ -206,6 +171,7 @@ public class LoginAty extends Activity implements View.OnClickListener {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
+                LogUtil.v(this,result);
                 Message message = new Message();
                 message.what = 0x01;
                 message.obj = result;

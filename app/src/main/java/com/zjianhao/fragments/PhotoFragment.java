@@ -81,7 +81,6 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.OnPhotoItemC
         photoList.setAdapter(adapter);
         adapter.setOnPhotoItemClickListener(this);
 
-
         getdata();
         return view;
     }
@@ -91,6 +90,10 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.OnPhotoItemC
         super.onDestroyView();
         ButterKnife.reset(this);
     }
+
+
+
+
 
 
     public void getdata() {
