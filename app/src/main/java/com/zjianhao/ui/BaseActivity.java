@@ -9,17 +9,8 @@ import android.view.Window;
 import com.zjianhao.album.AppManager;
 
 
-/**
- * @Description:Activity基类
- * @author linjizong
- * @date 2015-3-18
- */
 
-/**
- * @Description:
- * @author linjizong
- * @date 2015-3-30
- */
+
 public class BaseActivity extends Activity {
     //应用是否销毁标志
 	protected boolean isDestroy;

@@ -1,0 +1,14 @@
+body{
+    background-color: #ebeaea;
+}
+div.login{
+    width: 450px;
+    height: 350px;
+    margin-top: 80px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 5px;
+    padding: 20px;
+    border:2px solid  #ebeaea;
+    background-color: white;
+}

@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
                     if(resultCode == RESULT_OK){
                         ArrayList<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                        if (path.size()>1){
+                        if (path.size()>0){
                             Intent intent = new Intent(this, UploadService.class);
                             intent.putStringArrayListExtra("upload_photos",path);
                             startService(intent);

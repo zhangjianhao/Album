@@ -5,8 +5,8 @@ package com.zjianhao.constants;
  */
 public class Constants {
 
-    public static final String SERVER_IP = "192.168.1.100";
-    public static final String PROJECT_URL = "http://"+SERVER_IP+":8080/Album";
+    public static final String SERVER_IP = "192.168.1.105";
+    public static final String PROJECT_URL = "http://"+SERVER_IP+":8080/1300330128Album";
     public static final String LOGIN_URL = PROJECT_URL+"/userLogin.action";
     public static final String REGIST_URL = PROJECT_URL+"/userRegist.action";
 

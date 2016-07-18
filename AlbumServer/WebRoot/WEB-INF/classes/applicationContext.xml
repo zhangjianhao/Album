@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
+
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="url" value="jdbc:mysql://localhost:3306/album?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="101606"></property>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.zjianhao.model.Admin</value>
+				<value>com.zjianhao.model.User</value>
+				<value>com.zjianhao.model.Album</value>
+				<value>com.zjianhao.model.Photo</value>
+				<value>com.zjianhao.model.User</value>
+				<value>com.zjianhao.model.Album</value>
+				<value>com.zjianhao.model.Album</value></list>
+		</property></bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean
+		id="adminDao" class="com.zjianhao.daoImpl.AdminDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="adminBiz" class="com.zjianhao.bizImpl.AdminBizImpl">
+		<property name="adminDao" ref="adminDao"></property>
+	</bean>
+	
+	<bean id="adminAction" class="com.zjianhao.action.AdminAction">
+		<property name="adminBiz" ref="adminBiz"></property>
+	</bean>
+	<bean id="userDao" class="com.zjianhao.daoImpl.UserDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="userBiz" class="com.zjianhao.bizImpl.UserBizImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+	<bean id="userAction" class="com.zjianhao.action.UserAction">
+		<property name="userBiz" ref="userBiz"></property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<bean id="albumDao" class="com.zjianhao.daoImpl.AlbumDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="albumBiz" class="com.zjianhao.bizImpl.AlbumBizImpl">
+		<property name="albumDao" ref="albumDao"></property>
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+	<bean id="uploadAction" class="com.zjianhao.action.UploadAction">
+		<property name="albumBiz" ref="albumBiz"></property>
+		<property name="userBiz" ref="userBiz"></property>
+	</bean>
+	
+	<bean id="photoDao" class="com.zjianhao.daoImpl.PhotoDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="photoBiz" class="com.zjianhao.bizImpl.PhotoBizImpl">
+		<property name="userDao" ref="userDao"></property>
+		<property name="photoDao" ref="photoDao"></property>
+	</bean>
+	<bean id="photoAction" class="com.zjianhao.action.PhotoAction">
+		<property name="photoBiz" ref="photoBiz"></property>
+	</bean>
+	
+	
+	
+	
+	</beans>

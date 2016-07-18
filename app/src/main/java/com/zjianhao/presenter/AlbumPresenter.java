@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import com.zjianhao.album.AppContext;
 import com.zjianhao.bean.Album;
 import com.zjianhao.bean.Photo;
+import com.zjianhao.utils.LogUtil;
 import com.zjianhao.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public class AlbumPresenter {
                     photoMap.put(dateStr,photos);
                 }
             }else {
+                LogUtil.v(this,"-----name:"+name);
                 album = new Album(name,1,albumUrl);
                 Map<String, List<Photo>> photoMap = album.getPhotoMap();
                 ArrayList<Photo> photos = new ArrayList<>();
@@ -98,6 +100,11 @@ public class AlbumPresenter {
         AppContext application = (AppContext)activity.getApplication();
         application.setAlbums(albums);
         Album cameras = map.get("Camera");
+        if (cameras == null){
+            cameras = new ArrayList<>(map.values()).get(0);
+            if (cameras == null)
+                cameras = new Album("未知",0,null);
+        }
         application.setCameraAlbum(cameras);
         for (OnFinishLoadAlbum listener : listeners) {
             listener.onFinishLoadAlbumListener(albums,cameras);

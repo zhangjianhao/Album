@@ -1,0 +1,14 @@
+body{
+    background-color: #ebeaea;
+}
+div.regist{
+    width: 450px;
+    height: 400px;
+    margin-top: 60px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 5px;
+    padding: 20px;
+    border:2px solid  #ebeaea;
+    background-color: white;
+}

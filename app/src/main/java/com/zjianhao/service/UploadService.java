@@ -127,8 +127,6 @@ public class UploadService extends Service {
     }
 
     public void startUpload(){
-
-
         OkHttpClient client = new OkHttpClient();
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builder.addFormDataPart("userId", user.getId()+"");
@@ -140,7 +138,8 @@ public class UploadService extends Service {
                 tempFile.add(temp);
             }else
             temp = file;
-            builder.addFormDataPart("photos",file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"),temp));
+            builder.addFormDataPart("photos",file.getName(), RequestBody.create(MediaType.parse("image/*"),temp));
+//            application/octet-stream
         }
 
         final Request request = new Request.Builder()

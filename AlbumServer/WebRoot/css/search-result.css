@@ -1,0 +1,16 @@
+div.search-list{
+    margin-top: 50px;
+    position: relative;
+    margin-left: 130px;
+    margin-right: 130px;
+
+}
+
+p.post-date{
+    float: right;
+
+}
+ul.page-float{
+    float: right;
+    margin-right: 130px;
+}

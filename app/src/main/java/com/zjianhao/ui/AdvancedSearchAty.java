@@ -213,19 +213,19 @@ public class AdvancedSearchAty extends AppCompatActivity implements View.OnFocus
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String month = monthOfYear + "";
+                String month = monthOfYear+1 + "";
                 if (monthOfYear < 10)
                     month = "0" + month;
                 String day = dayOfMonth + "";
                 if (dayOfMonth < 10)
                     day = "0" + day;
                 if (which == R.id.photo_start_date) {
-                    photoStartDate.setText(year + "-" + month+1 + "-" + day);
+                    photoStartDate.setText(year + "-" + month + "-" + day);
                     photoEndDate.requestFocus();
 
                 }
                 if (which == R.id.photo_end_date) {
-                    photoEndDate.setText(year + "-" + month+1 + "-" + day);
+                    photoEndDate.setText(year + "-" + month + "-" + day);
                     photoLocationKey.requestFocus();
 
                 }

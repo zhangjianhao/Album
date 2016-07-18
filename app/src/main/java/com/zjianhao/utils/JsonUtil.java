@@ -45,7 +45,7 @@ public class JsonUtil {
             photo.setImgUrl(Constants.PROJECT_URL+p.getString("photoUrl"));
             photo.setName(p.getString("photoName"));
             photo.setDate(p.getLong("date"));
-            String dateStr = "上传时间:"+TimeUtil.parseIntDate(photo.getDate());
+            String dateStr = TimeUtil.parseIntDate(photo.getDate());
             if (photoMap.containsKey(dateStr)){//包含此时间戳的图片则继续添加
                 photoMap.get(dateStr).add(photo);
             }else {//创建新的图片时间戳键值对
@@ -56,6 +56,10 @@ public class JsonUtil {
 
         }
         album.setPhotoMap(photoMap);
-        return album.mapToList();
+        ArrayList<GridPhoto> gridPhotos = album.mapToList();
+        for (GridPhoto gridPhoto : gridPhotos) {
+            gridPhoto.setDateLabel("上传时间:"+gridPhoto.getDateLabel());
+        }
+        return gridPhotos;
     }
 }

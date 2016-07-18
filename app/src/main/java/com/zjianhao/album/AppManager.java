@@ -6,11 +6,7 @@ import android.content.Context;
 import java.util.Stack;
 
 
-/**
- * @Description:Activity管理类
- * @author linjizong
- * @date 2015-4-11
- */
+
 public class AppManager {
 	private static Stack<Activity> activityStack;
 	private static AppManager instance;
